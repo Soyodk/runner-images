@@ -1,0 +1,23 @@
+name: Build Windows 2022 Image
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Setup Packer
+      uses: hashicorp/setup-packer@v2
+      with:
+        version: 1.10.0
+
+    - name: Run packer build
+      run: |
+        cd images/win/windows-2022
+        packer init .
+        packer build windows-2022.pkr.hcl
